@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>àjọkẹ́ · The savings circle your community already trusts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Nunito:wght@400;500;600;700;800&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --cream:#F3ECE1;--cream-2:#EBE0D1;--card:#FBF7F0;
+    --plum:#6B4463;--plum-deep:#43293F;--mocha:#2A211F;
+    --ochre:#B88A3E;--line:#DDCFC0;--muted:#7A6A61;
+    --display:'Fraunces',Georgia,serif;
+    --body:'Nunito',-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:'Spline Sans Mono',ui-monospace,monospace;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--cream);color:var(--mocha);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  [hidden]{display:none!important}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--plum);font-weight:500}
+  h2.section-title{font-family:var(--display);font-weight:600;font-size:clamp(28px,4vw,44px);line-height:1.06;letter-spacing:-.01em;color:var(--mocha);margin:12px 0 0;max-width:18ch}
+  .lede{font-size:clamp(15px,1.6vw,18px);color:var(--muted);max-width:58ch;margin-top:14px}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+
+  /* nav */
+  header.nav{position:sticky;top:0;z-index:60;background:rgba(243,236,225,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px;gap:20px}
+  .wordmark{font-family:var(--display);font-weight:600;font-size:25px;letter-spacing:-.02em;color:var(--mocha);cursor:pointer}
+  .nav-links{display:flex;gap:24px;font-size:14px;font-weight:600;color:var(--muted)}
+  .nav-links a,.nav-links button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;padding:4px 0;border-bottom:2px solid transparent}
+  .nav-links a:hover,.nav-links button:hover{color:var(--plum)}
+  .nav-links button.active{color:var(--plum);border-bottom-color:var(--plum)}
+  .pill{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:#fff;background:var(--plum);padding:8px 15px;border-radius:100px;flex-shrink:0}
+  @media(max-width:860px){.nav-links{display:none}}
+
+  /* hero */
+  .hero{padding:56px 0 30px}
+  .hero-eyebrow-row{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--ochre);flex-shrink:0}
+  .hero h1{font-family:var(--display);font-weight:600;font-size:clamp(38px,6.4vw,74px);line-height:1;letter-spacing:-.025em;max-width:16ch}
+  .hero h1 em{font-style:italic;color:var(--plum)}
+  .hero-sub{font-size:clamp(16px,1.7vw,19px);color:var(--muted);max-width:52ch;margin-top:20px}
+  .notify{display:flex;gap:10px;max-width:430px;margin-top:26px;flex-wrap:wrap}
+  .notify input{flex:1;min-width:190px;font-family:var(--body);font-size:15px;padding:13px 20px;border-radius:100px;border:1.5px solid var(--line);background:var(--card);color:var(--mocha)}
+  .notify input:focus{outline:none;border-color:var(--plum)}
+  .btn{font-family:var(--body);font-size:15px;font-weight:700;padding:13px 24px;border-radius:100px;border:none;cursor:pointer;transition:transform .15s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--plum);color:#fff}
+  .hero-note{font-size:13px;color:var(--muted);margin-top:14px;font-family:var(--mono);letter-spacing:.02em}
+
+  /* signature rotation strip */
+  .rotation{margin-top:40px;border:1px solid var(--line);background:var(--card);border-radius:20px;padding:24px 22px 20px}
+  .rotation-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px;flex-wrap:wrap;gap:8px}
+  .rotation-head .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .rotation-head .pot{font-family:var(--mono);font-size:13px;color:var(--plum);font-weight:600}
+  .cycle{display:flex;align-items:flex-start;overflow-x:auto;padding-bottom:6px}
+  .seat{display:flex;flex-direction:column;align-items:center;gap:9px;min-width:90px;flex:1;position:relative}
+  .seat .conn{position:absolute;top:23px;left:calc(50% + 25px);right:calc(-50% + 25px);height:1.5px;background:var(--line)}
+  .seat:last-child .conn{display:none}
+  .disc{width:46px;height:46px;border-radius:50%;background:var(--cream-2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--plum);border:1.5px solid var(--line);position:relative;z-index:1}
+  .seat.now .disc{background:var(--plum);color:#fff;border-color:var(--plum);box-shadow:0 0 0 5px rgba(107,68,99,.14)}
+  .seat.done .disc{background:var(--cream-2);color:var(--muted);border-style:dashed}
+  .seat .who{font-size:12px;font-weight:700;color:var(--mocha);text-align:center}
+  .seat .turn{font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .seat.now .turn{color:var(--plum);font-weight:600}
+  .rotation-foot{margin-top:18px;padding-top:15px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+
+  /* tabs */
+  .tabs{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--cream)}
+  .tabs-inner{display:flex;align-items:center;gap:18px;padding:16px 0;flex-wrap:wrap}
+  .tabs-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);flex-shrink:0}
+  .tabs-row{display:flex;gap:9px;overflow-x:auto;flex:1;padding-bottom:2px}
+  .chip{font-family:var(--body);font-size:14px;font-weight:700;color:var(--mocha);background:var(--card);border:1.5px solid var(--line);border-radius:100px;padding:9px 17px;cursor:pointer;white-space:nowrap;transition:all .15s ease;flex-shrink:0}
+  .chip:hover{border-color:var(--plum);color:var(--plum)}
+    .chip.active{background:var(--plum);border-color:var(--plum);color:#fff}
+  .explore{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--cream)}
+  .explore .wrap{padding-top:24px;padding-bottom:24px}
+  .explore-line{font-family:var(--display);font-size:clamp(18px,2.1vw,25px);font-weight:600;color:var(--mocha);margin-bottom:16px;max-width:34ch}
+  .adire-mini{height:36px;background-repeat:repeat;background-size:44px 44px;opacity:.4}
+
+  /* reveal */
+  .panel{padding:56px 0;scroll-margin-top:82px}
+  @media(prefers-reduced-motion:no-preference){
+    .panel[data-panel]:not([hidden]){animation:rise .4s ease both}
+    @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  }
+  .final{padding:82px 0;text-align:center}
+  .final-h{font-family:var(--display);font-weight:600;font-size:clamp(34px,5vw,60px);letter-spacing:-.025em;line-height:1;color:var(--mocha)}
+  .final-p{color:var(--muted);margin-top:14px;font-size:18px}
+  .final .notify{max-width:440px}
+  .band{background:var(--plum-deep);color:var(--cream)}
+  .band .eyebrow{color:var(--ochre)}
+  .band h2.section-title{color:var(--cream)}
+  .band .lede{color:rgba(243,236,225,.74)}
+  .band .name-chip{background:transparent;border-color:rgba(243,236,225,.28);color:var(--cream)}
+  .band .wedge-card{background:rgba(243,236,225,.06);border-color:rgba(243,236,225,.16)}
+  .band .wedge-card h3{color:var(--cream)}
+  .band .wedge-card p{color:rgba(243,236,225,.74)}
+  .band .wedge-card .sep{background:rgba(243,236,225,.16)}
+  .band .cmp-title{color:var(--cream)}
+  .band .cmp thead th{color:rgba(243,236,225,.72);border-bottom-color:rgba(243,236,225,.45)}
+  .band .cmp thead th.hi{color:var(--ochre)}
+  .band .cmp th,.band .cmp td{border-bottom-color:rgba(243,236,225,.16)}
+  .band .cmp td{color:rgba(243,236,235,.72)}
+  .band .cmp td.dim{color:var(--cream)}
+  .band .cmp td.hi{color:var(--cream);background:rgba(243,236,225,.08)}
+  .panel-cta{display:inline-block;margin-top:34px;font-weight:700;font-size:14px;color:var(--plum);border-bottom:2px solid var(--plum);padding-bottom:2px}
+  .reveal-empty{max-width:1080px;margin:0 auto;padding:76px 28px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+  .reveal-empty p{font-family:var(--display);font-size:clamp(18px,2.2vw,25px);color:var(--muted);font-weight:500;max-width:24ch;line-height:1.32}
+
+  /* ── app preview: layout + controls ── */
+  .preview-grid{display:grid;grid-template-columns:auto 1fr;gap:52px;align-items:center;margin-top:36px}
+  .preview-step{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--plum);margin-bottom:12px}
+  .preview-cap{font-family:var(--display);font-size:clamp(20px,2.4vw,28px);font-weight:600;color:var(--mocha);line-height:1.22;min-height:2.6em}
+  .preview-dots{display:flex;gap:8px;margin:24px 0}
+  .pv-dot{height:9px;width:9px;border-radius:50%;background:var(--line);border:none;cursor:pointer;padding:0;transition:all .2s ease}
+  .pv-dot.on{background:var(--plum);width:26px;border-radius:5px}
+  .preview-btns{display:flex;gap:10px}
+  .pv-move{font-family:var(--body);font-weight:700;font-size:14px;padding:11px 22px;border-radius:100px;cursor:pointer;border:1.5px solid var(--line);background:var(--card);color:var(--mocha)}
+  .pv-move.primary{background:var(--plum);color:#fff;border-color:var(--plum)}
+  .pv-move:disabled{opacity:.4;cursor:default}
+  @media(max-width:760px){.preview-grid{grid-template-columns:1fr;gap:28px;justify-items:center;text-align:center}.preview-cap{min-height:auto}.preview-dots,.preview-btns{justify-content:center}}
+
+  /* ── app preview: real mockup screens (scoped) ── */
+  .appview{--bg:#EEE6EC;--rose:#C28F8E;--pink:#FCE9EA;--mocha:#3D2C2C;--taupe:#7A6666;--card:#fff;--border:#E4D5DE;--gold:#D4A017;--gold-bg:#FFF8E7;--plum:#6B4463;--green:#4F8B5F}
+  .appview .phone{background:#3D2C2C;border-radius:36px;padding:9px;width:220px;box-shadow:0 18px 40px -18px rgba(61,44,44,.4);cursor:pointer;margin:0 auto}
+  .appview .screen{background:var(--bg);border-radius:26px;overflow:hidden;width:100%;height:456px;display:flex;flex-direction:column}
+  .appview .status-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 3px;background:var(--bg);flex-shrink:0}
+  .appview .status-time{font-size:11px;font-weight:700;color:var(--mocha)}
+  .appview .status-r{display:flex;gap:3px;align-items:center}
+  .appview .bars{display:flex;align-items:flex-end;gap:1.5px}
+  .appview .bars span{background:var(--mocha);border-radius:1px;width:3px;opacity:.6}
+  .appview .batt{width:18px;height:9px;border:1.5px solid rgba(61,44,44,.4);border-radius:2.5px;position:relative}
+  .appview .batt::after{content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:2.5px;height:5px;background:rgba(61,44,44,.25);border-radius:0 1.5px 1.5px 0}
+  .appview .batt-fill{position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:60%;background:var(--mocha);border-radius:1px;opacity:.6}
+  .appview .nav-bar{display:flex;align-items:center;justify-content:space-between;padding:6px 14px 3px;background:var(--bg);flex-shrink:0}
+  .appview .nav-back{font-size:13px;color:var(--plum);font-weight:600}
+  .appview .nav-title{font-size:13px;font-weight:700;color:var(--mocha);flex:1;text-align:center}
+  .appview .body{padding:12px 14px 16px;background:var(--bg);flex:1;overflow-y:auto;scrollbar-width:none}
+  .appview .body::-webkit-scrollbar{display:none}
+  .appview .txt-xs{font-size:10px;color:var(--taupe)}
+  .appview .mb2{margin-bottom:2px}.appview .mb4{margin-bottom:4px}.appview .mb8{margin-bottom:8px}.appview .mb10{margin-bottom:10px}.appview .mb12{margin-bottom:12px}
+  .appview .center{text-align:center}
+  .appview .curr-pill{background:var(--pink);border-radius:7px;padding:4px 8px;font-size:11px;font-weight:700;color:var(--mocha);display:flex;align-items:center;gap:4px}
+  .appview .field{border-radius:10px;padding:8px 10px;margin-bottom:6px}
+  .appview .field.active{background:var(--pink);border:1.5px solid var(--rose)}
+  .appview .field-val{font-size:13px;font-weight:600;color:var(--mocha)}
+  .appview .field-val.rose{color:var(--plum)}
+  .appview .dd-field{display:flex;align-items:center;justify-content:space-between;background:#F8F0EF;border:1px solid var(--border);border-radius:10px;padding:9px 10px;margin-bottom:6px}
+  .appview .dd-field.active{background:var(--pink);border-color:var(--plum)}
+  .appview .dd-label{font-size:9px;color:var(--taupe);text-transform:uppercase;letter-spacing:.05em}
+  .appview .dd-val{font-size:13px;font-weight:700;color:var(--mocha);display:flex;align-items:center;gap:5px}
+  .appview .dd-list{background:var(--card);border:1px solid var(--border);border-radius:10px;margin:-2px 0 8px;overflow:hidden}
+  .appview .dd-opt{padding:7px 12px;font-size:12px;color:var(--mocha);border-bottom:1px solid var(--border)}
+  .appview .dd-opt:last-child{border:none}
+  .appview .dd-opt.sel{background:var(--pink);color:var(--plum);font-weight:700}
+  .appview .pink-card{background:var(--pink);border-radius:12px;padding:10px 12px}
+  .appview .toggle-pair{display:flex;gap:8px;margin-bottom:12px}
+  .appview .toggle-btn{flex:1;border-radius:11px;padding:10px 8px;text-align:center}
+  .appview .toggle-btn.on{background:var(--pink);border:2px solid var(--rose)}
+  .appview .toggle-btn.off{background:var(--card);border:1.5px solid var(--border)}
+  .appview .toggle-icon{font-size:17px;margin-bottom:3px}
+  .appview .toggle-title{font-size:11.5px;font-weight:700}
+  .appview .toggle-title.on{color:var(--plum)}
+  .appview .toggle-title.off{color:var(--mocha)}
+  .appview .toggle-sub{font-size:9px;color:var(--taupe);margin-top:1px;line-height:1.3}
+  .appview .cta{width:100%;background:var(--plum);border:none;border-radius:12px;padding:13px;font-size:13px;font-weight:700;color:#fff;text-align:center;margin-top:10px;box-shadow:0 4px 12px rgba(107,68,99,.25)}
+  .appview .cta-ghost{width:100%;background:transparent;border:1.5px solid rgba(61,44,44,.2);border-radius:12px;padding:11px;font-size:12px;font-weight:600;color:var(--mocha);text-align:center;margin-top:8px;opacity:.75}
+  .appview .card{background:var(--card);border-radius:12px;padding:10px 12px;box-shadow:0 1px 4px rgba(61,44,44,.07);border:1px solid var(--border)}
+  .appview .detail-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)}
+  .appview .detail-row:last-child{border:none;padding-bottom:0}
+  .appview .detail-label{font-size:11px;color:var(--taupe)}
+  .appview .detail-val{font-size:11px;font-weight:600;color:var(--mocha)}
+  .appview .detail-val.rose{color:var(--plum)}
+  .appview .hero-circle{width:56px;height:56px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+  .appview .hero-title{font-size:14px;font-weight:700;color:var(--mocha);text-align:center;margin-bottom:2px}
+  .appview .hero-sub{font-size:11px;color:var(--taupe);text-align:center;margin-bottom:12px}
+  .appview .stat-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+  .appview .stat-card{background:var(--pink);border-radius:10px;padding:8px 10px;text-align:center}
+  .appview .stat-val{font-size:18px;font-weight:800;color:var(--mocha)}
+  .appview .stat-lbl{font-size:10px;color:var(--taupe)}
+  .appview .share-row{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:11px;padding:10px 12px;margin-bottom:7px;border:1px solid var(--border)}
+  .appview .share-icon{width:32px;height:32px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+  .appview .share-title{font-size:12px;font-weight:700;color:var(--mocha)}
+  .appview .share-sub{font-size:9.5px;color:var(--taupe)}
+  .appview .chev{font-size:13px;color:var(--taupe);opacity:.5}
+  .appview .logo-wrap{display:flex;justify-content:center;margin-bottom:12px}
+  .appview .logo-ring{width:48px;height:48px;border-radius:13px;background:var(--pink);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px rgba(194,143,142,.12)}
+  .appview .av{width:30px;height:30px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--plum);flex-shrink:0}
+  .appview .trust-row{display:flex;align-items:center;gap:8px;background:var(--card);border-radius:9px;padding:7px 10px;margin-bottom:5px;border:1px solid var(--border)}
+  .appview .trust-dot{width:6px;height:6px;border-radius:50%;background:var(--plum);flex-shrink:0}
+  .appview .trust-txt{font-size:11px;color:var(--taupe)}
+  .appview .nav-step{font-size:11px;color:var(--taupe);white-space:nowrap}
+  .appview .seg-bar{display:flex;gap:3px;padding:0 14px 8px;flex-shrink:0}
+  .appview .seg{height:3px;border-radius:2px;flex:1}
+  .appview .seg.done{background:var(--plum)}
+  .appview .seg.off{background:var(--pink)}
+  .appview .txt-h{font-size:15px;font-weight:700;color:var(--mocha)}
+
+  /* preview view toggle */
+  .pv-toggle{display:inline-flex;background:var(--cream-2);border-radius:100px;padding:4px;margin-top:26px;gap:4px}
+  .pv-tab{font-family:var(--body);font-weight:700;font-size:14px;color:var(--muted);background:transparent;border:none;border-radius:100px;padding:9px 22px;cursor:pointer}
+  .pv-tab.active{background:var(--plum);color:#fff}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:38px}
+  .step{border-top:2px solid var(--plum);padding-top:18px}
+  .step .n{font-family:var(--mono);font-size:13px;color:var(--plum);font-weight:600}
+  .step h3{font-family:var(--display);font-size:22px;font-weight:600;margin:12px 0 8px}
+  .step p{font-size:15px;color:var(--muted)}
+  @media(max-width:760px){.steps{grid-template-columns:1fr;gap:24px}}
+
+  /* features */
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px}
+  .feature{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 20px}
+  .feature-ic{width:38px;height:38px;border-radius:10px;background:var(--cream-2);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+  .feature h3{font-family:var(--display);font-size:18px;font-weight:600;margin-bottom:7px}
+  .feature p{font-size:14px;color:var(--muted)}
+  @media(min-width:761px) and (max-width:980px){.features{grid-template-columns:1fr 1fr}}
+  @media(max-width:760px){.features{grid-template-columns:1fr;gap:14px}}
+
+  /* wedge */
+  .wedge-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:start;margin-top:36px}
+  .wedge-names{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+  .name-chip{font-family:var(--mono);font-size:13px;padding:7px 13px;border-radius:100px;border:1px solid var(--line);color:var(--mocha);background:var(--card)}
+  .wedge-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+  .wedge-card h3{font-family:var(--display);font-size:20px;font-weight:600;margin-bottom:8px}
+  .wedge-card p{color:var(--muted);font-size:14px}
+  .wedge-card .sep{height:1px;background:var(--line);margin:18px 0}
+  @media(max-width:760px){.wedge-grid{grid-template-columns:1fr;gap:28px}}
+
+  /* comparison table */
+  .cmp-title{font-family:var(--display);font-size:22px;font-weight:600;margin:48px 0 0}
+  .cmp{width:100%;border-collapse:collapse;margin-top:20px;font-size:14px;min-width:520px}
+  .cmp th,.cmp td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  .cmp thead th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:2px solid var(--mocha)}
+  .cmp thead th.hi{color:var(--plum)}
+  .cmp td.dim{font-weight:700;color:var(--mocha);width:20%}
+  .cmp td{color:var(--muted)}
+  .cmp td.hi{color:var(--mocha);font-weight:600;background:rgba(107,68,99,.06)}
+  .cmp tbody tr:last-child td{border-bottom:none}
+  @media(max-width:640px){.cmp th,.cmp td{padding:11px;font-size:12.5px}}
+
+  /* reputation */
+  .rep-tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:38px}
+  .tier{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px}
+  .tier .badge{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;padding:5px 10px;border-radius:100px;display:inline-block}
+  .tier .badge.new{background:var(--cream-2);color:var(--muted)}
+  .tier .badge.bronze{background:#EAD9C4;color:#8A5A2B}
+  .tier .badge.silver{background:#E2E0DD;color:#5E5C58}
+  .tier .badge.gold{background:#F1E4C0;color:var(--ochre)}
+  .tier h3{font-family:var(--display);font-size:19px;font-weight:600;margin:14px 0 6px}
+  .tier p{font-size:13px;color:var(--muted)}
+  @media(max-width:760px){.rep-tiers{grid-template-columns:1fr 1fr}}
+
+  /* trust */
+  .trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:38px}
+  .trust-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px}
+  .trust-card h3{font-family:var(--display);font-size:21px;font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .trust-card h3 .ic{width:34px;height:34px;border-radius:9px;background:var(--cream-2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .trust-list{display:flex;flex-direction:column;gap:11px}
+  .trust-item{display:flex;gap:11px;font-size:14px;color:var(--mocha);align-items:flex-start}
+  .trust-item .tk{color:var(--plum);flex-shrink:0;margin-top:2px;font-weight:700}
+  @media(max-width:760px){.trust-grid{grid-template-columns:1fr}}
+
+  /* faq */
+  .faq{margin-top:34px;border-top:1px solid var(--line)}
+  details{border-bottom:1px solid var(--line)}
+  summary{list-style:none;cursor:pointer;padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:20px;font-family:var(--display);font-size:clamp(17px,1.9vw,21px);font-weight:600;color:var(--mocha)}
+  summary::-webkit-details-marker{display:none}
+  summary .plus{width:30px;height:30px;border-radius:50%;background:var(--cream-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--mono);font-size:18px;color:var(--plum);transition:transform .2s ease}
+  details[open] summary .plus{transform:rotate(45deg);background:var(--plum);color:#fff}
+  details p{padding:0 0 22px;color:var(--muted);font-size:15px;max-width:72ch}
+
+  footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:13px}
+  .foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  .fmono{font-family:var(--mono);letter-spacing:.02em}
+
+  :focus-visible{outline:2px solid var(--plum);outline-offset:3px;border-radius:4px}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="wordmark" data-home>àjọkẹ́</div>
+    <nav class="nav-links">
+      <a href="#preview">See the app</a>
+      <button data-target="how">How it works</button>
+      <button data-target="features">Features</button>
+      <button data-target="reputation">Reputation</button>
+      <button data-target="trust">Trust and safety</button>
+      <button data-target="why">Why àjọkẹ́</button>
+      <button data-target="faq">FAQ</button>
+    </nav>
+    <a href="#top" class="pill">Coming soon</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-eyebrow-row"><span class="dot"></span><span class="eyebrow">Save together, take turns</span></div>
+    <h1>The savings circle your community <em>already trusts.</em> Now digital.</h1>
+    <p class="hero-sub">Millions of us already save together, pooling money with people we trust and taking turns. àjọkẹ́ makes that timeless habit structured, transparent, and safe.</p>
+    <form class="notify" onsubmit="return false">
+      <input type="email" placeholder="your@email.com" aria-label="Email address">
+      <button class="btn btn-primary" type="submit">Join the waitlist</button>
+    </form>
+    <p class="hero-note">Free to join · No card needed · Launching in the UK</p>
+  </div>
+</section>
+
+<div class="adire-mini" aria-hidden="true"></div>
+
+<!-- REVEAL AREA -->
+<div id="reveal">
+
+  <!-- SEE THE APP -->
+  <section class="panel" id="preview">
+    <div class="wrap">
+      <span class="eyebrow">See the app</span>
+      <h2 class="section-title">Take a look inside.</h2>
+      <div class="pv-toggle" role="tablist" aria-label="Choose a view">
+        <button class="pv-tab active" data-flow="admin">Admin view</button>
+        <button class="pv-tab" data-flow="member">Member view</button>
+      </div>
+
+      <div class="pv-flow" data-flow="admin">
+      <div class="preview-grid">
+        <div class="appview">
+          <div class="phone pv-phone" role="button" tabindex="0" aria-label="Tap for the next step">
+
+            <!-- 1 create form -->
+            <div class="screen" data-pscreen data-cap="Set the amount, cadence, members, and how the order is drawn. It all lives on one form.">
+              <div class="status-bar"><span class="status-time">9:41</span><div class="status-r"><div class="bars"><span style="height:4px"></span><span style="height:7px"></span><span style="height:10px"></span><span style="height:13px"></span></div><div class="batt"><div class="batt-fill"></div></div></div></div>
+              <div class="nav-bar"><span class="nav-back">‹</span><span class="nav-title">New group</span><span></span></div>
+              <div class="body" style="padding-top:8px">
+                <p class="txt-xs mb4">Contribution amount</p>
+                <div style="display:flex;gap:6px;margin-bottom:8px;align-items:center">
+                  <div class="curr-pill">🇬🇧 GBP</div>
+                  <div class="field active" style="flex:1;margin:0"><div class="field-val rose" style="font-size:20px">£200</div></div>
+                </div>
+                <div class="dd-field"><span class="dd-label">Frequency</span><span class="dd-val">Monthly <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1.5l3 3 3-3" stroke="#3D2C2C" stroke-width="1.2" stroke-linecap="round"/></svg></span></div>
+                <div class="dd-field"><span class="dd-label">Members</span><span class="dd-val">8 <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1.5l3 3 3-3" stroke="#3D2C2C" stroke-width="1.2" stroke-linecap="round"/></svg></span></div>
+                <div class="dd-field"><span class="dd-label">Collection method</span><span class="dd-val">Pay by Bank</span></div>
+                <div class="dd-field active"><span class="dd-label">Max member slots</span><span class="dd-val" style="color:var(--plum)">3 <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1.5l3 3 3-3" stroke="#6B4463" stroke-width="1.2" stroke-linecap="round"/></svg></span></div>
+                <div class="pink-card mb8" style="text-align:center">
+                  <div class="txt-xs mb2">Pot per cycle</div>
+                  <div style="font-size:20px;font-weight:800;color:var(--plum)">£1,600</div>
+                  <div class="txt-xs">8 members · up to 3 slots each · 8 cycles</div>
+                </div>
+                <p class="txt-xs mb4">Rotation order</p>
+                <div class="toggle-pair">
+                  <div class="toggle-btn on"><div class="toggle-icon">🎲</div><div class="toggle-title on">Random draw</div><div class="toggle-sub">System picks on start date</div></div>
+                  <div class="toggle-btn off"><div class="toggle-icon">🙋</div><div class="toggle-title off">Volunteer choice</div><div class="toggle-sub">Members pick their own position</div></div>
+                </div>
+                <button class="cta">Continue</button>
+              </div>
+            </div>
+
+            <!-- 2 review -->
+            <div class="screen" data-pscreen data-cap="Check the terms once. After it is created, the amount, cadence, and members are locked." hidden>
+              <div class="status-bar"><span class="status-time">9:41</span><div class="status-r"><div class="bars"><span style="height:4px"></span><span style="height:7px"></span><span style="height:10px"></span><span style="height:13px"></span></div><div class="batt"><div class="batt-fill"></div></div></div></div>
+              <div class="nav-bar"><span class="nav-back">‹</span><span class="nav-title">Review &amp; create</span><span></span></div>
+              <div class="body">
+                <div class="card mb10">
+                  <div class="detail-row"><span class="detail-label">Contribution</span><span class="detail-val">£200 / month</span></div>
+                  <div class="detail-row"><span class="detail-label">Members</span><span class="detail-val">8</span></div>
+                  <div class="detail-row"><span class="detail-label">Collection method</span><span class="detail-val">Pay by Bank</span></div>
+                  <div class="detail-row"><span class="detail-label">Max slots per member</span><span class="detail-val">3</span></div>
+                  <div class="detail-row"><span class="detail-label">Rotation order</span><span class="detail-val">Random draw</span></div>
+                  <div class="detail-row" style="border:none"><span class="detail-label">Total pot per cycle</span><span class="detail-val rose">£1,600</span></div>
+                </div>
+                <p class="txt-xs center mb12" style="text-align:center">Once created, contribution amount, frequency, and members can't be edited, only viewed.</p>
+                <button class="cta">Yes, create this group</button>
+                <button class="cta-ghost">Go back &amp; edit</button>
+              </div>
+            </div>
+
+            <!-- 3 created -->
+            <div class="screen" data-pscreen data-cap="The circle is created and waiting for people to fill the places before it begins." hidden>
+              <div class="status-bar"><span class="status-time">9:41</span><div class="status-r"><div class="bars"><span style="height:4px"></span><span style="height:7px"></span><span style="height:10px"></span><span style="height:13px"></span></div><div class="batt"><div class="batt-fill"></div></div></div></div>
+              <div class="nav-bar"><span></span><span class="nav-title">Group created</span><span></span></div>
+              <div class="body">
+                <div class="hero-circle"><svg width="24" height="18" viewBox="0 0 28 20" fill="none"><path d="M2 10L10 18L26 2" stroke="#6B4463" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="hero-title">Family savings is ready</div>
+                <div class="hero-sub">Invite members to fill the 8 slots before the group can commence</div>
+                <div class="stat-row">
+                  <div class="stat-card"><div class="stat-val">1/8</div><div class="stat-lbl">Members joined</div></div>
+                  <div class="stat-card"><div class="stat-val">£200</div><div class="stat-lbl">Per month</div></div>
+                </div>
+                <button class="cta">Share group</button>
+                <button class="cta-ghost">Go to group</button>
+              </div>
+            </div>
+
+            <!-- 4 share -->
+            <div class="screen" data-pscreen data-cap="Share one link, into the àjọkẹ́ community or straight to WhatsApp." hidden>
+              <div class="status-bar"><span class="status-time">9:41</span><div class="status-r"><div class="bars"><span style="height:4px"></span><span style="height:7px"></span><span style="height:10px"></span><span style="height:13px"></span></div><div class="batt"><div class="batt-fill"></div></div></div></div>
+              <div class="nav-bar"><span class="nav-back">‹</span><span class="nav-title">Share group</span><span></span></div>
+              <div class="body">
+                <p class="txt-xs mb8">In the àjọkẹ́ community</p>
+                <div class="share-row"><div class="share-icon">🌍</div><div style="flex:1"><div class="share-title">Broadcast to your connections</div><div class="share-sub">Visible to people you're connected to on àjọkẹ́</div></div><span class="chev">›</span></div>
+                <div class="share-row"><div class="share-icon">📢</div><div style="flex:1"><div class="share-title">Open community board</div><div class="share-sub">Visible to anyone looking for a group</div></div><span class="chev">›</span></div>
+                <p class="txt-xs mb8" style="margin-top:10px">Share a link</p>
+                <div class="share-row"><div class="share-icon" style="background:#E7F8EC">💬</div><div style="flex:1"><div class="share-title">WhatsApp</div></div><span class="chev">›</span></div>
+                <div class="share-row"><div class="share-icon">🔗</div><div style="flex:1"><div class="share-title">Copy link</div></div><span class="chev">›</span></div>
+              </div>
+            </div>
+
+            <!-- 5 active -->
+            <div class="screen" data-pscreen data-cap="Everyone verified and in. The circle is live and the rotation order is set." hidden>
+              <div class="status-bar"><span class="status-time">9:41</span><div class="status-r"><div class="bars"><span style="height:4px"></span><span style="height:7px"></span><span style="height:10px"></span><span style="height:13px"></span></div><div class="batt"><div class="batt-fill"></div></div></div></div>
+              <div class="nav-bar"><span></span><span class="nav-title">Group is active</span><span></span></div>
+              <div class="body">
+                <div class="hero-circle"><svg width="24" height="18" viewBox="0 0 28 20" fill="none"><path d="M2 10L10 18L26 2" stroke="#6B4463" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="hero-title">Family savings is live</div>
+                <div class="hero-sub">Approved by Tunde (admin)</div>
+                <div class="card mb10">
+                  <div class="detail-row"><span class="detail-label">Members</span><span class="detail-val">8</span></div>
+                  <div class="detail-row"><span class="detail-label">Cycle length</span><span class="detail-val">Monthly · 8 cycles</span></div>
+                  <div class="detail-row"><span class="detail-label">Starts</span><span class="detail-val">1 May 2025</span></div>
+                  <div class="detail-row" style="border:none"><span class="detail-label">Your position</span><span class="detail-val rose">3 of 8</span></div>
+                </div>
+                <p class="txt-xs center mb10" style="text-align:center">All 8 members have been notified. First contribution is due 1 May.</p>
+                <button class="cta">Go to group</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="preview-side">
+          <div class="preview-step pv-step">Step 1 of 5</div>
+          <div class="preview-cap pv-cap">Set the amount, cadence, members, and how the order is drawn. It all lives on one form.</div>
+          <div class="preview-dots pv-dots"></div>
+          <div class="preview-btns">
+            <button class="pv-move pv-back" disabled>Back</button>
+            <button class="pv-move primary pv-next">Next</button>
+          </div>
+        </div>
+      </div>
+      </div><!-- /admin flow -->
+
+      <div class="pv-flow" data-flow="member" hidden>
+      <div class="preview-grid">
+        <div class="appview">
+          <div class="phone pv-phone" role="button" tabindex="0" aria-label="Tap for the next step">
+
+            <!-- 1 enter code -->
+            <div class="screen" data-pscreen data-cap="Got a code from your admin? Enter it, or open the invite link they sent you.">
+              <div class="status-bar"><span class="status-time">9:41</span><div class="status-r"><div class="bars"><span style="height:4px"></span><span style="height:7px"></span><span style="height:10px"></span><span style="height:13px"></span></div><div class="batt"><div class="batt-fill"></div></div></div></div>
+              <div class="nav-bar"><span class="nav-back">‹</span><span class="nav-title">Join a group</span><span></span></div>
+              <div class="body">
+                <div class="logo-wrap"><div class="logo-ring"><svg width="24" height="24" viewBox="0 0 32 32" fill="none"><path d="M16 2L19 10H27L21 14.5L23.5 22.5L16 18L8.5 22.5L11 14.5L5 10H13L16 2Z" fill="#3D2C2C"/></svg></div></div>
+                <p style="font-size:16px;font-weight:800;color:var(--mocha);text-align:center;margin-bottom:3px">Have an invite code?</p>
+                <p class="txt-xs center mb12" style="text-align:center">Enter the code your admin shared, or open their invite link.</p>
+                <p class="txt-xs mb4">Invite code</p>
+                <div class="field active" style="text-align:center"><div class="field-val rose" style="font-size:20px;letter-spacing:.28em">AJ7K2</div></div>
+                <button class="cta">Continue</button>
+                <button class="cta-ghost">Paste invite link</button>
+              </div>
+            </div>
+
+            <!-- 2 group info -->
+            <div class="screen" data-pscreen data-cap="See the group's terms and who runs it before you decide to join." hidden>
+              <div class="status-bar"><span class="status-time">9:41</span><div class="status-r"><div class="bars"><span style="height:4px"></span><span style="height:7px"></span><span style="height:10px"></span><span style="height:13px"></span></div><div class="batt"><div class="batt-fill"></div></div></div></div>
+              <div class="body">
+                <div class="logo-wrap"><div class="logo-ring" style="width:44px;height:44px;border-radius:12px"><svg width="22" height="22" viewBox="0 0 32 32" fill="none"><path d="M16 2L19 10H27L21 14.5L23.5 22.5L16 18L8.5 22.5L11 14.5L5 10H13L16 2Z" fill="#3D2C2C"/></svg></div></div>
+                <p style="font-size:16px;font-weight:800;color:var(--mocha);text-align:center;margin-bottom:3px">You're invited</p>
+                <p class="txt-xs center mb12" style="text-align:center">Tunde wants you to join their savings group</p>
+                <div style="background:var(--pink);border-radius:13px;padding:12px;margin-bottom:10px">
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                    <div class="av">FS</div>
+                    <div><p style="font-size:14px;font-weight:700;color:var(--mocha);margin:0">Family savings</p><p class="txt-xs">by Tunde Obi</p></div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px">
+                    <div class="card" style="text-align:center;padding:6px"><div style="font-size:14px;font-weight:800;color:var(--plum)">£200</div><div class="txt-xs">monthly</div></div>
+                    <div class="card" style="text-align:center;padding:6px"><div style="font-size:14px;font-weight:800;color:var(--plum)">8</div><div class="txt-xs">members</div></div>
+                    <div class="card" style="text-align:center;padding:6px"><div style="font-size:14px;font-weight:800;color:var(--plum)">8mo</div><div class="txt-xs">duration</div></div>
+                  </div>
+                </div>
+                <div class="trust-row"><div class="trust-dot"></div><span class="trust-txt">KYC verified · all members</span></div>
+                <div class="trust-row"><div class="trust-dot"></div><span class="trust-txt">Funds held by a regulated partner · secure</span></div>
+                <div class="trust-row"><div class="trust-dot"></div><span class="trust-txt">Admin reputation: ⭐ Reliable · 12 groups completed</span></div>
+                <button class="cta">View full details</button>
+                <button class="cta-ghost">Decline invite</button>
+              </div>
+            </div>
+
+            <!-- 3 choose slots -->
+            <div class="screen" data-pscreen data-cap="Pick how many slots you want. More slots means more contributions and more payouts." hidden>
+              <div class="status-bar"><span class="status-time">9:41</span><div class="status-r"><div class="bars"><span style="height:4px"></span><span style="height:7px"></span><span style="height:10px"></span><span style="height:13px"></span></div><div class="batt"><div class="batt-fill"></div></div></div></div>
+              <div class="nav-bar"><span class="nav-back">‹</span><span class="nav-title">Choose your slots</span><span class="nav-step">2 of 3</span></div>
+              <div class="seg-bar"><div class="seg done"></div><div class="seg done" style="opacity:.5"></div><div class="seg off"></div></div>
+              <div class="body" style="padding-top:4px">
+                <p class="txt-h mb4">How many slots?</p>
+                <p class="txt-xs mb12">This group allows up to 3 slots per member. Each slot is a full share.</p>
+                <div class="dd-field active"><span class="dd-label">Slots</span><span class="dd-val" style="color:var(--plum)">2 <svg width="8" height="6" viewBox="0 0 8 6" fill="none"><path d="M1 1.5l3 3 3-3" stroke="#6B4463" stroke-width="1.2" stroke-linecap="round"/></svg></span></div>
+                <div class="dd-list mb10"><div class="dd-opt">1</div><div class="dd-opt sel">2</div><div class="dd-opt">3</div></div>
+                <div style="background:var(--pink);border-radius:10px;padding:10px 12px;margin-bottom:14px">
+                  <p class="txt-xs mb2">Monthly commitment</p>
+                  <p style="font-size:20px;font-weight:800;color:var(--plum)">£400</p>
+                  <p class="txt-xs">2 slots · receive twice · starting 1 May 2025</p>
+                </div>
+                <button class="cta">Confirm 2 slots</button>
+              </div>
+            </div>
+
+            <!-- 4 joined -->
+            <div class="screen" data-pscreen data-cap="You're in. Once every place is filled, the circle begins." hidden>
+              <div class="status-bar"><span class="status-time">9:41</span><div class="status-r"><div class="bars"><span style="height:4px"></span><span style="height:7px"></span><span style="height:10px"></span><span style="height:13px"></span></div><div class="batt"><div class="batt-fill"></div></div></div></div>
+              <div class="nav-bar"><span></span><span class="nav-title">Welcome</span><span></span></div>
+              <div class="body">
+                <div class="hero-circle"><svg width="24" height="18" viewBox="0 0 28 20" fill="none"><path d="M2 10L10 18L26 2" stroke="#6B4463" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="hero-title">You're in!</div>
+                <div class="hero-sub">Family savings · 2 slots · £400/month</div>
+                <div class="card mb12">
+                  <div class="detail-row"><span class="detail-label">Members joined</span><span class="detail-val">3 of 8</span></div>
+                  <div class="detail-row" style="border:none"><span class="detail-label">Status</span><span class="detail-val rose">Waiting for group to fill</span></div>
+                </div>
+                <button class="cta">Go to group</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="preview-side">
+          <div class="preview-step pv-step">Step 1 of 4</div>
+          <div class="preview-cap pv-cap">Got a code from your admin? Enter it, or open the invite link they sent you.</div>
+          <div class="preview-dots pv-dots"></div>
+          <div class="preview-btns">
+            <button class="pv-move pv-back" disabled>Back</button>
+            <button class="pv-move primary pv-next">Next</button>
+          </div>
+        </div>
+      </div>
+      </div><!-- /member flow -->
+
+    </div>
+  </section>
+
+  <div class="explore">
+    <div class="wrap">
+      <p class="explore-line">Curious about the rest? Tap a topic below and it opens right here.</p>
+      <div class="tabs-row" role="tablist" aria-label="Learn more about àjọkẹ́">
+        <button class="chip" data-target="how">How it works</button>
+        <button class="chip" data-target="features">Features</button>
+        <button class="chip" data-target="reputation">Reputation</button>
+        <button class="chip" data-target="trust">Trust and safety</button>
+        <button class="chip" data-target="why">Why àjọkẹ́</button>
+        <button class="chip" data-target="faq">FAQ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="panel" data-panel="how" hidden>
+    <div class="wrap">
+      <span class="eyebrow">How it works</span>
+      <h2 class="section-title">Three steps. The rest runs on schedule.</h2>
+      <div class="steps">
+        <div class="step"><span class="n">Step 1</span><h3>Create the circle</h3><p>Set the amount, how often you contribute, and how the rotation order is chosen. Setup takes a few minutes.</p></div>
+        <div class="step"><span class="n">Step 2</span><h3>Invite your people</h3><p>Share a join link. Everyone verifies who they are with a quick identity check before they hold a place.</p></div>
+        <div class="step"><span class="n">Step 3</span><h3>Save and take turns</h3><p>Reminders land before each due date. You pay in a few taps through your own bank. Each turn, one member collects the pot.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="panel" data-panel="features" hidden>
+    <div class="wrap">
+      <span class="eyebrow">Features</span>
+      <h2 class="section-title">Everything your circle needs, in one place.</h2>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 4h12a1 1 0 011 1v6a1 1 0 01-1 1H8l-3 3v-3H3a1 1 0 01-1-1V5a1 1 0 011-1z" stroke="#6B4463" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+          <h3>Group messaging</h3>
+          <p>Built in chat keeps every conversation about the circle in one place.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5" stroke="#6B4463" stroke-width="1.4"/><path d="M12 12l4 4" stroke="#6B4463" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <h3>Find a savings community</h3>
+          <p>Discover open circles in your city or family network and ask to join.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2c-2.5 0-4 1.8-4 4.5 0 4-1.5 5-1.5 5.5h11c0-.5-1.5-1.5-1.5-5.5C13 3.8 11.5 2 9 2z" stroke="#6B4463" stroke-width="1.4" stroke-linejoin="round"/><path d="M7.5 14.5c.2.8.8 1.3 1.5 1.3s1.3-.5 1.5-1.3" stroke="#6B4463" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+          <h3>Smart notifications</h3>
+          <p>Gentle reminders before every due date, and an alert on each payment.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 7.5v3h2l1.3 3h1.6l-1-3L15 13V5L7 7.5H3z" stroke="#6B4463" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+          <h3>Broadcast announcements</h3>
+          <p>Admins update everyone at once, no copy pasting across chat threads.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 7h9l-2.5-2.5M14 11H5l2.5 2.5" stroke="#6B4463" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Position swaps</h3>
+          <p>Need your turn sooner? Request a swap and the group can agree to it.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-ic"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l7 3.5L9 9 2 5.5 9 2z" stroke="#6B4463" stroke-width="1.4" stroke-linejoin="round"/><path d="M2.5 9.5L9 13l6.5-3.5" stroke="#6B4463" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Multiple slots</h3>
+          <p>Take more than one place in a larger circle for more contributions and payouts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPUTATION -->
+  <section class="panel" data-panel="reputation" hidden>
+    <div class="wrap">
+      <span class="eyebrow">Reputation Score</span>
+      <h2 class="section-title">Trust you earn, and keep.</h2>
+      <p class="lede">Every on time contribution and completed cycle builds your standing. Others see a simple badge, never your raw history. Pay reliably and larger circles open up to you.</p>
+      <div class="rep-tiers">
+        <div class="tier"><span class="badge new">New member</span><h3>Just starting</h3><p>Everyone begins here. Your first circle is where your record starts.</p></div>
+        <div class="tier"><span class="badge bronze">Bronze</span><h3>Finding your feet</h3><p>A few reliable cycles behind you. Trust is building.</p></div>
+        <div class="tier"><span class="badge silver">Silver</span><h3>Dependable</h3><p>A steady record across circles. Members know you show up.</p></div>
+        <div class="tier"><span class="badge gold">Gold</span><h3>Fully trusted</h3><p>Consistent and on time across many cycles. The largest circles are open to you.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="panel" data-panel="trust" hidden>
+    <div class="wrap">
+      <span class="eyebrow">Trust and safety</span>
+      <h2 class="section-title">Your identity and your money, both protected.</h2>
+      <div class="trust-grid">
+        <div class="trust-card">
+          <h3><span class="ic"><svg width="17" height="17" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="3" stroke="#6B4463" stroke-width="1.5"/><path d="M3 15.5c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#6B4463" stroke-width="1.5" stroke-linecap="round"/></svg></span>Identity verification</h3>
+          <div class="trust-list">
+            <div class="trust-item"><span class="tk">›</span>Government issued ID and address checked before anyone holds a place</div>
+            <div class="trust-item"><span class="tk">›</span>A verified badge shown on every member profile</div>
+            <div class="trust-item"><span class="tk">›</span>No unverified stranger can sit in your circle</div>
+          </div>
+        </div>
+        <div class="trust-card">
+          <h3><span class="ic"><svg width="17" height="17" viewBox="0 0 18 18" fill="none"><path d="M9 2l6 2.4v4c0 3.8-2.6 6.6-6 7.6-3.4-1-6-3.8-6-7.6v-4L9 2z" stroke="#6B4463" stroke-width="1.4" stroke-linejoin="round"/></svg></span>Safeguarded funds</h3>
+          <div class="trust-list">
+            <div class="trust-item"><span class="tk">›</span>Contributions held by a regulated payments partner</div>
+            <div class="trust-item"><span class="tk">›</span>Protected and returned to you even if àjọkẹ́ itself ran into trouble</div>
+            <div class="trust-item"><span class="tk">›</span>Every contribution and payout logged in one place</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="panel" data-panel="why" hidden>
+    <div class="wrap">
+      <span class="eyebrow">Why àjọkẹ́, not just any app</span>
+      <h2 class="section-title">Made for the way your circle already works.</h2>
+      <div class="wedge-grid">
+        <div>
+          <p class="lede">Most apps flatten every tradition into one generic product. àjọkẹ́ starts from how these circles are actually run: an organiser who holds the group together, members who take turns, and a bond that matters more than any feature list. Whatever you call it, wherever you are, it works the way you already do.</p>
+          <p class="lede" style="margin-top:14px">You do not have to explain your custom to us. It is the point.</p>
+          <div class="wedge-names">
+            <span class="name-chip">Ajó</span><span class="name-chip">Esusu</span><span class="name-chip">Susu</span><span class="name-chip">Round robin</span><span class="name-chip">Hui</span><span class="name-chip">Tanda</span><span class="name-chip">Chit fund</span>
+          </div>
+        </div>
+        <div class="wedge-card">
+          <h3>An admin, not an algorithm</h3>
+          <p>Your circle keeps its organiser. àjọkẹ́ gives them the tools to run it cleanly, and gives every member the same clear view.</p>
+          <div class="sep"></div>
+          <h3 style="font-size:19px">One shared view</h3>
+          <p>Everyone sees the same thing: who has paid, and whose turn is next. No hidden corners, no arguments over the record.</p>
+        </div>
+      </div>
+      <h3 class="cmp-title">The chat group vs àjọkẹ́</h3>
+      <div style="overflow-x:auto">
+        <table class="cmp">
+          <thead><tr><th></th><th>Chat group and transfers</th><th class="hi">àjọkẹ́</th></tr></thead>
+          <tbody>
+            <tr><td class="dim">Payment record</td><td>Buried in a noisy thread</td><td class="hi">One clear log of every payment</td></tr>
+            <tr><td class="dim">Late contributions</td><td>Awkward chasing by hand</td><td class="hi">Reminders do the chasing</td></tr>
+            <tr><td class="dim">New members</td><td>No verified identity</td><td class="hi">ID verified, badge on profile</td></tr>
+            <tr><td class="dim">Where funds sit</td><td>In the organiser's own account</td><td class="hi">Held by a regulated partner</td></tr>
+            <tr><td class="dim">Disputes</td><td>He said, she said</td><td class="hi">An audit trail settles it</td></tr>
+            <tr><td class="dim">Reputation</td><td>Lost when someone leaves</td><td class="hi">Follows members across circles</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="panel" data-panel="faq" hidden>
+    <div class="wrap">
+      <span class="eyebrow">Frequently asked</span>
+      <h2 class="section-title">Fair questions. Straight answers.</h2>
+      <div class="faq">
+        <details open><summary>What is a rotating savings circle?<span class="plus">+</span></summary><p>A group of people who trust each other agree to pay a set amount on a regular schedule. Each turn, one member takes the whole pot, until everyone has had theirs. It is a long standing way to save together, known as Ajó and Esusu in West Africa, Susu in the Caribbean, and by other names elsewhere.</p></details>
+        <details><summary>Is my money safe?<span class="plus">+</span></summary><p>Your contributions are held by a regulated payments partner and protected even if àjọkẹ́ itself ran into trouble, so your money is returned to you rather than being at risk. Every contribution and payout is logged so the circle always adds up.</p></details>
+        <details><summary>What happens if someone does not pay?<span class="plus">+</span></summary><p>A missed contribution is flagged the day after the deadline and counts against that member's Reputation Score. If a payout comes up short, the shortfall is recorded against the person who missed and repaid to whoever was affected first at the next turn. àjọkẹ́ keeps a formal record to support recovery, but it does not guarantee or cover a missed contribution itself, so choose your circle with people you trust.</p></details>
+        <details><summary>Who can join?<span class="plus">+</span></summary><p>Anyone in the UK who passes identity verification. You can start your own circle, join one by invite, or find an open circle looking for members.</p></details>
+        <details><summary>Is there a fee?<span class="plus">+</span></summary><p>A small fee of 0.3 percent is applied once, when a payout is made. There is no second fee if arrears are later recovered. A free plan covers running one circle and joining another at the same time.</p></details>
+        <details><summary>When does àjọkẹ́ launch?<span class="plus">+</span></summary><p>We are launching in the UK soon. Join the waitlist above and we will let you know the moment it opens.</p></details>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="adire-mini" aria-hidden="true"></div>
+<section class="final" id="notify">
+  <div class="wrap">
+    <span class="eyebrow">Your circle is waiting</span>
+    <h2 class="final-h" style="margin-top:16px">Start saving together.</h2>
+    <p class="final-p">Be first to know when àjọkẹ́ opens in the UK.</p>
+    <form class="notify" style="margin:26px auto 0;justify-content:center" onsubmit="return false">
+      <input type="email" placeholder="your@email.com" aria-label="Email address">
+      <button class="btn btn-primary" type="submit">Join the waitlist</button>
+    </form>
+    <p class="hero-note" style="text-align:center">Free to join · No card needed · UK launch</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span class="wordmark" style="font-size:20px" data-home>àjọkẹ́</span>
+    <span class="fmono">Savings by community. Paid on time.</span>
+    <span class="fmono">© 2026 àjọkẹ́ · United Kingdom</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var panels = Array.prototype.slice.call(document.querySelectorAll('[data-panel]'));
+    var triggers = Array.prototype.slice.call(document.querySelectorAll('[data-target]'));
+    function setActive(id){ triggers.forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-target') === id); }); }
+    function collapse(){ panels.forEach(function(p){ p.hidden = true; }); setActive(null); }
+    function show(id){
+      panels.forEach(function(p){ p.hidden = (p.getAttribute('data-panel') !== id); });
+      setActive(id);
+      var el = document.querySelector('[data-panel="' + id + '"]');
+      if(el){ el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); }
+    }
+    triggers.forEach(function(t){
+      t.addEventListener('click', function(e){
+        e.preventDefault();
+        var id = t.getAttribute('data-target');
+        if(t.classList.contains('active')){ collapse(); }
+        else { show(id); }
+      });
+    });
+    Array.prototype.slice.call(document.querySelectorAll('[data-home]')).forEach(function(h){
+      h.addEventListener('click', function(){ collapse(); window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
+    });
+
+    // app preview walkthroughs (admin + member)
+    function initFlow(flow){
+      var screens = Array.prototype.slice.call(flow.querySelectorAll('[data-pscreen]'));
+      if(!screens.length){ return; }
+      var cap = flow.querySelector('.pv-cap');
+      var step = flow.querySelector('.pv-step');
+      var back = flow.querySelector('.pv-back');
+      var next = flow.querySelector('.pv-next');
+      var dotsWrap = flow.querySelector('.pv-dots');
+      var phone = flow.querySelector('.pv-phone');
+      var i = 0, dots = [];
+      screens.forEach(function(_, ix){
+        var b = document.createElement('button');
+        b.className = 'pv-dot'; b.type = 'button'; b.setAttribute('aria-label', 'Step ' + (ix + 1));
+        b.addEventListener('click', function(){ go(ix); });
+        dotsWrap.appendChild(b); dots.push(b);
+      });
+      function render(){
+        screens.forEach(function(s, ix){ s.hidden = ix !== i; });
+        dots.forEach(function(d, ix){ d.classList.toggle('on', ix === i); });
+        if(cap){ cap.textContent = screens[i].getAttribute('data-cap'); }
+        if(step){ step.textContent = 'Step ' + (i + 1) + ' of ' + screens.length; }
+        if(back){ back.disabled = i === 0; }
+        if(next){ next.textContent = i === screens.length - 1 ? 'Start over' : 'Next'; }
+      }
+      function go(n){ i = (n + screens.length) % screens.length; render(); }
+      if(next){ next.addEventListener('click', function(){ go(i + 1); }); }
+      if(back){ back.addEventListener('click', function(){ if(i > 0){ go(i - 1); } }); }
+      if(phone){
+        phone.addEventListener('click', function(){ go(i + 1); });
+        phone.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(i + 1); } });
+      }
+      render();
+    }
+    Array.prototype.slice.call(document.querySelectorAll('.pv-flow')).forEach(initFlow);
+
+    // preview view toggle (admin / member)
+    var pvTabs = Array.prototype.slice.call(document.querySelectorAll('.pv-tab'));
+    var pvFlows = Array.prototype.slice.call(document.querySelectorAll('.pv-flow'));
+    pvTabs.forEach(function(t){
+      t.addEventListener('click', function(){
+        var f = t.getAttribute('data-flow');
+        pvTabs.forEach(function(x){ x.classList.toggle('active', x === t); });
+        pvFlows.forEach(function(fl){ fl.hidden = fl.getAttribute('data-flow') !== f; });
+      });
+    });
+
+    // adire texture
+    var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'>"
+      + "<g fill='none' stroke='%236B4463' stroke-width='1'>"
+      + "<circle cx='22' cy='22' r='8'/><circle cx='22' cy='22' r='3.5'/>"
+      + "<circle cx='0' cy='0' r='6'/><circle cx='44' cy='0' r='6'/>"
+      + "<circle cx='0' cy='44' r='6'/><circle cx='44' cy='44' r='6'/>"
+      + "<path d='M22 0v6M22 38v6M0 22h6M38 22h6'/>"
+      + "</g></svg>";
+    var url = 'url("data:image/svg+xml,' + svg + '")';
+    document.querySelectorAll('.adire-mini').forEach(function(el){ el.style.backgroundImage = url; });
+  })();
+</script>
+
+</body>
+</html>
